@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.towhid</groupId>
-    <artifactId>pointOfSale</artifactId>
+    <artifactId>practicepharmacy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>practicepharmacy</name>
     <description>Demo project for Spring Boot</description>
