@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sale/model/ProductModel.dart';
+import 'package:point_of_sale/page/HomePageDhanmondiBranch.dart';
 import 'package:point_of_sale/page/product/UpdateProduct.dart';
+ // Import Home page
 import 'package:point_of_sale/service/ProductService.dart';
 
 class Notifications extends StatefulWidget with WidgetsBindingObserver {
@@ -9,9 +11,6 @@ class Notifications extends StatefulWidget with WidgetsBindingObserver {
   @override
   State<Notifications> createState() => _NotificationsState();
 }
-
-
-
 
 class _NotificationsState extends State<Notifications> {
   late Future<List<Product>> futureProducts;
@@ -79,7 +78,7 @@ class _NotificationsState extends State<Notifications> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('Expeiry date last three days'),
+          title: Text('Expiry Date: Last Three Days'),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -90,7 +89,6 @@ class _NotificationsState extends State<Notifications> {
               ),
             ),
           ),
-
         ),
         body: FutureBuilder<List<Product>>(
           future: futureProducts,
@@ -187,7 +185,6 @@ class _NotificationsState extends State<Notifications> {
                               ),
                             ],
                           ),
-                            
                         ),
                       ),
                     ),
@@ -196,6 +193,16 @@ class _NotificationsState extends State<Notifications> {
               );
             }
           },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()), // Navigate to Home page
+            );
+          },
+          child: Icon(Icons.home),
+          backgroundColor: Colors.blue,
         ),
       ),
     );

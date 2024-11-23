@@ -19,6 +19,7 @@ import 'package:point_of_sale/page/product/StockListDhanmondiBranch.dart';
 import 'package:point_of_sale/page/product/StockListBanani.dart';
 import 'package:point_of_sale/page/product/StockListGulshan.dart';
 import 'package:point_of_sale/page/supplier/AllSupplierView.dart';
+import 'package:point_of_sale/service/AuthService.dart';
 import 'package:point_of_sale/service/ProductService.dart';
 
 class Home extends StatefulWidget {
@@ -32,15 +33,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   int _currentIndex = 0;
   int _carouselIndex = 0;
   late PageController _pageController;
+  int _currentPage = 0;
   Timer? _timer;
   late Future<List<Product>> futureProducts;
   int expiringProductsCount = 0; // Tracks the number of expiring products
   Map<int, bool> hoverStates = {};
 
-  static const List<String> _texts = [
-    "মাসিক ও বার্ষিক প্যাকেজে ব্যাবসার সকল প্রয়োজনীয় \nফিচার নিয়ে দ্রুত ব্যবস্থপনায় এগিয়ে থাকুন।",
-    "মাত্র ১৯৯ টাকায় ৬০% ছাড়ে মাসব্যাপি\nস্মাট ম্যানেজমেন্ট আরও সহজ, আরও দ্রুত।",
-    "সারা বছরের নিশ্চিত ব্যাবস্থাপনা মাত্র ১৯৯ টাকায় \n৮০% ছাড়ে ব্যাবসার উন্নয়নে ফ্রী সব ফিচার সমূহ।"
+  final List<String> _carouselImages = [
+    "https://media.istockphoto.com/id/1227011225/vector/people-in-protective-masks-are-in-the-queue-to-the-cashier-keeping-social-distance-safe.jpg?s=612x612&w=0&k=20&c=XnRL2Fd_w_GIQF-kLw99ScXxLAJaMov_V2cMIC4adQI=",
+    "https://t4.ftcdn.net/jpg/02/74/73/01/240_F_274730109_gF0azWfAPbZFLr06yKbFu8S5CPSNMYJs.jpg",
+    "https://media.istockphoto.com/id/1220303230/vector/social-distancing-during-the-covid-19-pandemic.jpg?s=612x612&w=0&k=20&c=I7Xv5ZAEeL4BYKvj_Ta9_W_D2k17h_VS3mgQhjaDl_4="
   ];
 
   static const List<Color> _colors = [
@@ -53,29 +55,40 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _pageController = PageController();
-    _startAutoPageChange();
+    // Auto-scroll carousel every 3 seconds
+    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_pageController.hasClients) {
+        setState(() {
+          _currentPage = (_currentPage + 1) % _carouselImages.length;
+          _pageController.animateToPage(
+            _currentPage,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        });
+      }
+    });
     calculateExpiringProducts(); // Calculate expiring products on initialization
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
 
-  void _startAutoPageChange() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      setState(() {
-        _carouselIndex = (_carouselIndex + 1) % _texts.length;
-      });
-      _pageController.animateToPage(
-        _carouselIndex,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
+  // void _startAutoPageChange() {
+  //   _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+  //     setState(() {
+  //       _carouselIndex = (_carouselIndex + 1) % _texts.length;
+  //     });
+  //     _pageController.animateToPage(
+  //       _carouselIndex,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   });
+  // }
 
   // Calculate the number of products expiring within the next 3 days
   void calculateExpiringProducts() async {
@@ -115,7 +128,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Towhid Medical'),
+        title: Text('Departmental Store'),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -129,6 +142,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         actions: [
           Stack(
             alignment: Alignment.center,
+
             children: [
               IconButton(
                 icon: Icon(
@@ -193,23 +207,57 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ListTile(
               leading: const Icon(Icons.phone),
               title: const Text("Contact"),
-              onTap: () {},
+              onTap: () {
+                // Handle Contact navigation or functionality
+              },
             ),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text("Profile"),
-              onTap: () {},
+              onTap: () {
+                // Handle Profile navigation or functionality
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text("Logout"),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => LogoutPage()));
+              onTap: () async {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Logout Confirmation"),
+                      content: const Text("Are you sure you want to logout?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            // Close the dialog without logging out
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            // Perform logout and navigate to login
+                            await AuthService().logout();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()),
+                            );
+                          },
+                          child: const Text("Logout"),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
+
           ],
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Container(
@@ -217,41 +265,62 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           child: Column(
             children: [
               // Carousel
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
-                child: Container(
-                  height: 80,
-                  child: PageView.builder(
-                    controller: _pageController,
-                    itemCount: _texts.length,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _carouselIndex = index;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return Container(
-                        color: _colors[index],
-                        child: Center(
-                          child: Text(
-                            _texts[index],
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: SizedBox(
+                      height: 150,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: _carouselImages.length,
+                        itemBuilder: (context, index) {
+                          return Image.network(
+                            _carouselImages[index],
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  // Left Button
+                  // Positioned(
+                  //   left: 10,
+                  //   child: IconButton(
+                  //     onPressed: _goToPreviousImage,
+                  //     icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
+                  //   ),
+                  // ),
+                  // Right Button
+                  // Positioned(
+                  //   right: 10,
+                  //   child: IconButton(
+                  //     onPressed: _goToNextImage,
+                  //     icon: const Icon(Icons.arrow_forward_ios, color: Colors.black54),
+                  //   ),
+                  // ),
+                ],
               ),
               // Add gap between carousel and grid
-              SizedBox(height: 20), // Adjust height as needed
-
+              SizedBox(height: 20),
+              // Adjust height as needed
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _carouselImages.map((url) {
+                  int index = _carouselImages.indexOf(url);
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentPage == index ? Colors.orange : Colors.grey,
+                    ),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 20),
               // GridView with Hover Animation
               Expanded(
                 child: GridView.builder(

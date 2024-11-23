@@ -15,6 +15,20 @@ class _SalesChartState extends State<SalesChart> {
   DateTimeRange? selectedDateRange;
   final ScrollController _scrollController = ScrollController();
 
+  // List of colors for the bars
+  final List<Color> barColors = [
+    Colors.blue,
+    Colors.green,
+    Colors.red,
+    Colors.purple,
+    Colors.orange,
+    Colors.yellow,
+    Colors.cyan,
+    Colors.pink,
+    Colors.brown,
+    Colors.teal,
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +71,11 @@ class _SalesChartState extends State<SalesChart> {
     );
   }
 
+  // Method to assign a color to each bar based on its index
+  Color getBarColor(int index) {
+    return barColors[index % barColors.length];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +112,7 @@ class _SalesChartState extends State<SalesChart> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   IconButton(
-                    icon: Icon(Icons.calendar_today, color: Colors.red), // Red color for calendar button
+                    icon: Icon(Icons.calendar_today, color: Colors.red),
                     onPressed: () async {
                       final DateTimeRange? picked = await showDateRangePicker(
                         context: context,
@@ -117,15 +136,15 @@ class _SalesChartState extends State<SalesChart> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_left, color: Colors.red), // Red color for left arrow
+                    icon: Icon(Icons.arrow_left, color: Colors.red),
                     onPressed: () {
-                      scrollChart(-100); // Scroll left by 100 pixels
+                      scrollChart(-100);
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.arrow_right, color: Colors.red), // Red color for right arrow
+                    icon: Icon(Icons.arrow_right, color: Colors.red),
                     onPressed: () {
-                      scrollChart(100); // Scroll right by 100 pixels
+                      scrollChart(100);
                     },
                   ),
                 ],
@@ -163,10 +182,12 @@ class _SalesChartState extends State<SalesChart> {
                     series: <CartesianSeries>[
                       ColumnSeries<MapEntry<String, double>, String>(
                         dataSource: groupedSales.entries.toList(),
-                        xValueMapper: (MapEntry<String, double> sales, _) => sales.key,
-                        yValueMapper: (MapEntry<String, double> sales, _) => sales.value,
-                        pointColorMapper: (MapEntry<String, double> sales, _) {
-                          return getColorForSales(sales.value);
+                        xValueMapper: (MapEntry<String, double> sales, _) =>
+                        sales.key,
+                        yValueMapper: (MapEntry<String, double> sales, _) =>
+                        sales.value,
+                        pointColorMapper: (MapEntry<String, double> sales, int index) {
+                          return getBarColor(index); // Assign a unique color
                         },
                       ),
                     ],
@@ -223,15 +244,5 @@ class _SalesChartState extends State<SalesChart> {
     if (groupedSales.isEmpty) return 10;
     double maxValue = groupedSales.values.reduce((a, b) => a > b ? a : b);
     return (maxValue / 5).ceilToDouble();
-  }
-
-  Color getColorForSales(double salesValue) {
-    if (salesValue > 1000) {
-      return Colors.yellowAccent;
-    } else if (salesValue > 500) {
-      return Colors.orange;
-    } else {
-      return Colors.red;
-    }
   }
 }

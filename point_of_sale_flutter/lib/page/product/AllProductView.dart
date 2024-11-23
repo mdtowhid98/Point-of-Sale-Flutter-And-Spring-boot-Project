@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sale/model/ProductModel.dart';
+import 'package:point_of_sale/page/HomePageDhanmondiBranch.dart';
 import 'package:point_of_sale/page/product/CreateProduct.dart';
 import 'package:point_of_sale/page/product/UpdateProduct.dart';
 import 'package:point_of_sale/service/ProductService.dart';
@@ -70,6 +71,15 @@ class _AllProductViewState extends State<AllProductView> {
         appBar: AppBar(
           title: Text('Products'),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );
+              }, // Navigate to home screen on tap
+          ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(

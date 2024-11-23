@@ -2,15 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jwt_decode/jwt_decode.dart';
-import 'package:http/http.dart' as http;
+import 'package:point_of_sale/page/ErrorPage.dart';
 import 'package:point_of_sale/page/HomePageBananiBranch.dart';
-import 'package:point_of_sale/page/LogoutPage.dart';
-import 'package:point_of_sale/page/BranchProfile.dart';
 import 'package:point_of_sale/page/HomePageDhanmondiBranch.dart';
 import 'package:point_of_sale/page/Registration.dart';
 import 'package:point_of_sale/page/Sales/CreateSalesBananiBranch.dart';
-import 'package:point_of_sale/page/category/AllCategoryView.dart';
 import 'package:point_of_sale/service/AuthService.dart';
 
 class Login extends StatefulWidget {
@@ -21,25 +17,30 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController email = TextEditingController()..text = 'alammdtowhidul9@gmail.com';
   final TextEditingController password = TextEditingController()..text = '123456';
+  // final TextEditingController email = TextEditingController();
+  // final TextEditingController password = TextEditingController();
   final storage = FlutterSecureStorage();
   bool _isPasswordVisible = false;
+  bool isLoading = false;
 
-  AuthService authService=AuthService();
-
+  AuthService authService = AuthService();
 
   Future<void> loginUser(BuildContext context) async {
+    setState(() {
+      isLoading = true; // Start loading
+    });
+
     try {
       final response = await authService.login(email.text, password.text);
 
       // Successful login, role-based navigation
-      final  role =await authService.getUserRole(); // Get role from AuthService
-
+      final role = await authService.getUserRole(); // Get role from AuthService
 
       if (role == 'PHARMACIST') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => CreateSalesBananiBranch()),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => CreateSalesBananiBranch()),
+        // );
       } else if (role == 'ADMIN') {
         Navigator.pushReplacement(
           context,
@@ -50,127 +51,129 @@ class _LoginState extends State<Login> {
           context,
           MaterialPageRoute(builder: (context) => HomePageBananiBranch()),
         );
-      } else {
-        print('Unknown role: $role');
+      }
+
+      else {
+        // print('Unknown role: $role');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Errorpage()),
+        );
       }
     } catch (error) {
       print('Login failed: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed. Please try again.')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false; // Stop loading
+      });
     }
   }
-
-
-  // Future<void> loginUser(BuildContext context) async {
-  //   final url = Uri.parse('http://localhost:8087/login');
-  //
-  //   final response = await http.post(
-  //     url,
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: jsonEncode({'email': email.text, 'password': password.text}),
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     final responseData = jsonDecode(response.body);
-  //     final token = responseData['token'];
-  //
-  //     Map<String, dynamic> payload = Jwt.parseJwt(token);
-  //     String sub = payload['sub'];
-  //     String role = payload['role'];
-  //
-  //     await storage.write(key: 'token', value: token);
-  //     await storage.write(key: 'sub', value: sub);
-  //     await storage.write(key: 'role', value: role);
-  //
-  //     print('Login successful. Sub: $sub, Role: $role');
-  //
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => Home()),
-  //     );
-  //   } else {
-  //     print('Login failed with status: ${response.statusCode}');
-  //     // Optionally show an error message
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.lightBlueAccent],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      body: Stack(
+        children: [
+          // Main content
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(20.0), // Apply padding of 10 on all sides
+                  child: Image.network(
+                    'https://i.postimg.cc/sXCZ47RM/woman-self-kiosk-checkout-payment-store-107791-30537.png',
+                    height: 220,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Card(
+                    color: Colors.lightGreenAccent, // Set the background color to amber
+                    elevation: 8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Login",
+                            style: GoogleFonts.lato(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          _buildTextField(email, "Email", Icons.email),
+                          SizedBox(height: 15),
+                          _buildPasswordField(),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: isLoading ? null : () => loginUser(context),
+                            child: Text(
+                              isLoading ? "Please wait..." : "Login",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold, // Makes the text bold
+                                color: Colors.black,         // Sets the font color to black
+
+                              ),
+                            ),
+
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          TextButton(
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RegistrationPage()),
+                              );
+                            },
+                            child: Text(
+                              'Registration',
+                              style: TextStyle(
+                                color: Colors.black,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              color: Colors.lightBlueAccent,
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Login",
-                      style: GoogleFonts.lato(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    _buildTextField(email, "Email", Icons.email),
-                    SizedBox(height: 15),
-                    _buildPasswordField(),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        loginUser(context);
-                      },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: GoogleFonts.lato().fontFamily,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                        backgroundColor: Colors.lightGreenAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RegistrationPage()),
-                        );
-                      },
-                      child: Text(
-                        'Registration',
-                        style: TextStyle(
-                          color: Colors.white,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ],
+          // Loading spinner
+          if (isLoading)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.lightGreenAccent),
                 ),
               ),
             ),
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -180,36 +183,34 @@ class _LoginState extends State<Login> {
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.black),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.black),
         ),
-        prefixIcon: Icon(icon, color: Colors.white),
+        prefixIcon: Icon(icon, color: Colors.black),
         contentPadding: EdgeInsets.symmetric(vertical: 8), // Adjust vertical padding for smaller height
         isDense: true, // Makes the text field more compact
       ),
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
     );
   }
 
   Widget _buildPasswordField() {
     return TextField(
-
-
       controller: password,
       decoration: InputDecoration(
         labelText: "Password",
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.black),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.black),
         ),
-        prefixIcon: Icon(Icons.lock, color: Colors.white),
+        prefixIcon: Icon(Icons.lock, color: Colors.black),
         suffixIcon: IconButton(
           icon: Icon(
             _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-            color: Colors.white,
+            color: Colors.black,
           ),
           onPressed: () {
             setState(() {
@@ -221,7 +222,7 @@ class _LoginState extends State<Login> {
         isDense: true, // Makes the text field more compact
       ),
       obscureText: !_isPasswordVisible,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
     );
   }
 }
