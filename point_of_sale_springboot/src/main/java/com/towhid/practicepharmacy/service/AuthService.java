@@ -164,11 +164,11 @@ public class AuthService {
     private void sendActivationEmail(User user) {
         String activationLink = "http://localhost:8087/activate/" + user.getId();
 
-        String mailText = "<h3>Dear " + user.getName()
-                + ",</h3>"
-                + "<p>Please click on the following link to confirm your account:</p>"
-                + "<a href=\"" + activationLink + "\">Activate Account</a>"
-                + "<br><br>Regards,<br>Pharmacy";
+        String mailText = "Dear"+" " + user.getName()+" "
+
+                + "Please click on the following link to confirm your account:"
+                + "\"" + activationLink + "\">Activate Account"
+                + "Regards,Departmental Store";
 
         String subject = "Confirm User Account";
 
