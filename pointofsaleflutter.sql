@@ -261,7 +261,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   KEY `FKj8rfw4x0wjjyibfqq566j4qng` (`user_id`),
   CONSTRAINT `FKj8rfw4x0wjjyibfqq566j4qng` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIyOTMwOTIsImV4cCI6MTczMjM3OTQ5Mn0.Fpscqk_0owC5bXrAXhHBvM6iGRfAu3iFUVX6fySeDPHyG2zs5hGesFj2-863U35f',1),(2,_binary '\0','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZHRvd2hpZHVsYTQ2MEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczMjI5MzE2NSwiZXhwIjoxNzMyMzc5NTY1fQ.nvnAwoSs-7EDZ8w-tF2M5-SwacqWwh63xhf46Rf3OHfB37lUfRy0g_KGKocjLHl4',2),(3,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIyOTMzNjQsImV4cCI6MTczMjM3OTc2NH0.75Og48BpHp2nrc7TNOO7hYS8wJfEf1Gykeq5ooLMTYiZwBpa_axK3Mt6XFmSw4VE',1),(4,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMjkzMzkwLCJleHAiOjE3MzIzNzk3OTB9.64LdwL_6hek9WJq-hB-c_JJ8bMkYrvBITsAWUzUWNBTkJZxpFQtHZnO2s8S4AEBV',1),(5,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzM1NjA3LCJleHAiOjE3MzI0MjIwMDd9.b5d-wReeUrNvghKboWnOvwC-IWRNtRQtGyfaJKRGjrDKBBAab_f6xr8YLVm-Jugo',1),(6,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzM1ODk1LCJleHAiOjE3MzI0MjIyOTV9.a4HnH8az_-g8loWrLE0xCsTmsCI6NVC8jRkiE7MAscgtRBXDhO33LcUyj1zIBNnE',1),(7,_binary '\0','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzM2Mjc0LCJleHAiOjE3MzI0MjI2NzR9.FziMNKG1nbqdTWnclP7XMY7vkuGF7rUvkdl7LFVBHm6pb-nH5vx_2JHM2QiDlPWP',1);
+INSERT INTO `token` VALUES (1,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIyOTMwOTIsImV4cCI6MTczMjM3OTQ5Mn0.Fpscqk_0owC5bXrAXhHBvM6iGRfAu3iFUVX6fySeDPHyG2zs5hGesFj2-863U35f',1),(2,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZHRvd2hpZHVsYTQ2MEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczMjI5MzE2NSwiZXhwIjoxNzMyMzc5NTY1fQ.nvnAwoSs-7EDZ8w-tF2M5-SwacqWwh63xhf46Rf3OHfB37lUfRy0g_KGKocjLHl4',2),(3,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIyOTMzNjQsImV4cCI6MTczMjM3OTc2NH0.75Og48BpHp2nrc7TNOO7hYS8wJfEf1Gykeq5ooLMTYiZwBpa_axK3Mt6XFmSw4VE',1),(4,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMjkzMzkwLCJleHAiOjE3MzIzNzk3OTB9.64LdwL_6hek9WJq-hB-c_JJ8bMkYrvBITsAWUzUWNBTkJZxpFQtHZnO2s8S4AEBV',1),(5,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzM1NjA3LCJleHAiOjE3MzI0MjIwMDd9.b5d-wReeUrNvghKboWnOvwC-IWRNtRQtGyfaJKRGjrDKBBAab_f6xr8YLVm-Jugo',1),(6,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzM1ODk1LCJleHAiOjE3MzI0MjIyOTV9.a4HnH8az_-g8loWrLE0xCsTmsCI6NVC8jRkiE7MAscgtRBXDhO33LcUyj1zIBNnE',1),(7,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzM2Mjc0LCJleHAiOjE3MzI0MjI2NzR9.FziMNKG1nbqdTWnclP7XMY7vkuGF7rUvkdl7LFVBHm6pb-nH5vx_2JHM2QiDlPWP',1),(8,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMzc4MzY1LCJleHAiOjE3MzI0NjQ3NjV9.wm4tZbfoU5u1CYipx-IfKN0THaxUV0Yeh-8dfiFaVjF0rpk4cE-QFX0dsHMUHMW_',1),(9,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjdnZ2YmpqNzU1QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzMyMzgwMjI2LCJleHAiOjE3MzI0NjY2MjZ9._nITg-HVF754PHAtqIJskgwODd2L05oGO3aYxG_L-kj2ilEUaocUHrh6s5zcOn4q',3),(10,_binary '\0','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjdnZ2YmpqNzU1QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzMyMzgwMjgxLCJleHAiOjE3MzI0NjY2ODF9.JTjV0SYPW5JkZnpZiVACcZA4uvWhkdvPbKwVinPixvjS53ilRgxyy3C4AalbCcze',3),(11,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyNjc4Mjk3LCJleHAiOjE3MzI3NjQ2OTd9.q8Jj9P9soYGtvhqhCUeKVcnSryQ7l0bLn5kkSkz6EENAs1sMt7kQXFRH_Jx3-O3x',1),(12,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZHRvd2hpZHVsYTQ2MEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczMjY3ODM4OCwiZXhwIjoxNzMyNzY0Nzg4fQ._WIWHzhyVlj24WBGKK_T0aMY4mDpz1yQ2phEbFMglqRXnisxDjMS-of-XFKUY47S',2),(13,_binary '','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyNjc4NDk0LCJleHAiOjE3MzI3NjQ4OTR9.d459iNoM_2-DVwduXwBv2FyYLvJ2l2RKTuEpLaweZ8n9Z8O63GHg1zf4q44e2QOW',1),(14,_binary '\0','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbGFtbWR0b3doaWR1bDlAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyOTcxMTM2LCJleHAiOjE3MzMwNTc1MzZ9.dZlBg29WseHZ5b0V2rQylue-rpcjyc37aShjqRW7xd98JAhphPKNiKF9tOQvMVJc',1),(15,_binary '\0','eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtZHRvd2hpZHVsYTQ2MEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczMjk3MTE4MSwiZXhwIjoxNzMzMDU3NTgxfQ.zny_fyTGZ1N2x0xJ_y5_honLX9WUAYxOrwdi6ZM6F6cvFBWEOx3Qw6vWtPKP_VIB',2);
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,7 +296,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`),
   UNIQUE KEY `UK3wfgv34acy32imea493ekogs5` (`cell`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +305,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,_binary '','Naogaon','01767515057','2024-11-06','alammdtowhidul9@gmail.com','Male',NULL,'Md Towhidul Alam','$2a$10$EunTdiC3IA5AV3P7bfjz6ODjbGzY185qrYUKdxSgdUc/gSMNG1ys2','ADMIN'),(2,_binary '','wr','4845985','2024-11-15','mdtowhidula460@gmail.com','Male',NULL,'Towhid','$2a$10$86kk2XnDT98D5I/8YSyJ7OxBDNc4GWJxlO/WILVYFhndqjIgrZtyy','USER');
+INSERT INTO `users` VALUES (1,_binary '','Naogaon','01767515057','2024-11-06','alammdtowhidul9@gmail.com','Male',NULL,'Md Towhidul Alam','$2a$10$EunTdiC3IA5AV3P7bfjz6ODjbGzY185qrYUKdxSgdUc/gSMNG1ys2','ADMIN'),(2,_binary '','wr','4845985','2024-11-15','mdtowhidula460@gmail.com','Male',NULL,'Towhid','$2a$10$86kk2XnDT98D5I/8YSyJ7OxBDNc4GWJxlO/WILVYFhndqjIgrZtyy','USER'),(3,_binary '','rhfge','485418','2024-11-15','cvvvbjj755@gmail.com','Male',NULL,'Towhid','$2a$10$REzpWYmZVoe4Ax6GWt1NC.NkWxmjs1dfu1J1lR3On7NvGwAyU/LuS','PHARMACIST');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -318,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-23 11:21:22
+-- Dump completed on 2024-11-30 19:10:42
