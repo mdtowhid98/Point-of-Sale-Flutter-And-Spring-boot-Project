@@ -109,7 +109,7 @@ When Create Sales generate invoice his branch.
 ### :pushpin: Stock:
 Banani Branch Stock All Products.
 
-![ Stock page](https://github.com/mdtowhid98/Point-of-Sale-Flutter-And-Spring-boot-Project/blob/main/Screen%20shot/19%2Clast%203%20days.png)
+![ Stock page](https://github.com/mdtowhid98/Point-of-Sale-Flutter-And-Spring-boot-Project/blob/main/Screen%20shot/21%2Cbanani%20branch%20stock.png)
 
 
 
