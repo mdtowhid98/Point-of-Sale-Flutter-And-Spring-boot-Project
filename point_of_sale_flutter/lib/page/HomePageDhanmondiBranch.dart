@@ -98,8 +98,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       expiringProductsCount = products.where((product) {
         if (product.expiryDate == null) return false; // Skip if expiry date is missing
         final expiryDate = DateTime.parse(product.expiryDate!); // Parse expiry date
-        final difference = expiryDate.difference(now).inDays; // Calculate days to expiry
-        return difference >= 0 && difference < 3; // Check if within next 3 days
+        final difference = expiryDate.difference(now).inDays;
+        return difference <= 0 && difference >= -3; // Includes products expired up to 3 days ago
+
       }).length;
     });
   }

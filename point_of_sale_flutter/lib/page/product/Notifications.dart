@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:point_of_sale/model/ProductModel.dart';
+import 'package:point_of_sale/page/HomePageBananiBranch.dart';
 import 'package:point_of_sale/page/HomePageDhanmondiBranch.dart';
 import 'package:point_of_sale/page/product/UpdateProduct.dart';
- // Import Home page
 import 'package:point_of_sale/service/ProductService.dart';
 
 class Notifications extends StatefulWidget with WidgetsBindingObserver {
@@ -32,7 +32,7 @@ class _NotificationsState extends State<Notifications> {
   void initState() {
     super.initState();
     futureProducts = ProductService().fetchProducts();
-    calculateExpiringProducts(); // Calculate the count on init
+    calculateExpiringProducts();
   }
 
   void _updateProduct(Product product) {
@@ -78,10 +78,10 @@ class _NotificationsState extends State<Notifications> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('Expiry Date: Last Three Days'),
+          title: const Text('Expiry Date: Last Three Days'),
           centerTitle: true,
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.orange, Colors.lightGreenAccent, Colors.yellowAccent],
                 begin: Alignment.topLeft,
@@ -94,22 +94,24 @@ class _NotificationsState extends State<Notifications> {
           future: futureProducts,
           builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No products available'));
+              return const Center(child: Text('No products available'));
             } else {
               final now = DateTime.now();
               final filteredProducts = snapshot.data!.where((product) {
                 if (product.expiryDate == null) return false;
                 final expiryDate = DateTime.parse(product.expiryDate!);
                 final difference = expiryDate.difference(now).inDays;
-                return difference >= 0 && difference < 3;
+                return difference <= 0 && difference >= -3; // Includes products expired up to 3 days ago
+
+
               }).toList();
 
               if (filteredProducts.isEmpty) {
-                return Center(child: Text('No products expiring in the next 3 days'));
+                return const Center(child: Text('No products expiring in the next 3 days'));
               }
 
               return ListView.builder(
@@ -131,7 +133,7 @@ class _NotificationsState extends State<Notifications> {
                       });
                     },
                     child: AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 200),
                       decoration: BoxDecoration(
                         color: backgroundColor,
                         border: Border.all(
@@ -148,7 +150,7 @@ class _NotificationsState extends State<Notifications> {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space out content
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Expanded(
@@ -157,7 +159,7 @@ class _NotificationsState extends State<Notifications> {
                                   children: [
                                     Text(
                                       'Product Name: ${product.name ?? 'N/A'}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                         color: Colors.black,
@@ -167,17 +169,17 @@ class _NotificationsState extends State<Notifications> {
                                     ),
                                     Text(
                                       'Manufacture Date: ${product.manufactureDate ?? 'N/A'}',
-                                      style: TextStyle(fontSize: 14, color: Colors.blue),
+                                      style: const TextStyle(fontSize: 14, color: Colors.blue),
                                     ),
                                     Text(
                                       'Expiry Date: ${product.expiryDate ?? 'N/A'}',
-                                      style: TextStyle(fontSize: 14, color: Colors.red),
+                                      style: const TextStyle(fontSize: 14, color: Colors.red),
                                     ),
                                   ],
                                 ),
                               ),
                               IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.edit,
                                   color: Colors.blue,
                                 ),
@@ -198,10 +200,10 @@ class _NotificationsState extends State<Notifications> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home()), // Navigate to Home page
+              MaterialPageRoute(builder: (context) => const Home()),
             );
           },
-          child: Icon(Icons.home),
+          child: const Icon(Icons.home),
           backgroundColor: Colors.blue,
         ),
       ),
