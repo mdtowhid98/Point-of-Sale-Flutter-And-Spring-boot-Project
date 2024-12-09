@@ -15,9 +15,11 @@
 ### :pushpin: User Role:
 
 ![ Role page](https://github.com/mdtowhid98/Point-of-Sale-Flutter-And-Spring-boot-Project/blob/main/Screen%20shot/3%2CUser%20Role.png)
+
 Admin Features
 
 ![](https://github.com/mdtowhid98/Point-of-Sale-Flutter-And-Spring-boot-Project/blob/main/Screen%20shot/4%2CAdmin%20features.png)
+
 User Features
 
 ![](https://github.com/mdtowhid98/Point-of-Sale-Flutter-And-Spring-boot-Project/blob/main/Screen%20shot/5%2CUser%20features.png)
