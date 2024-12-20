@@ -15,10 +15,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController email = TextEditingController()..text = 'alammdtowhidul9@gmail.com';
-  final TextEditingController password = TextEditingController()..text = '123456';
-  // final TextEditingController email = TextEditingController();
-  // final TextEditingController password = TextEditingController();
+  // final TextEditingController email = TextEditingController()..text = 'alammdtowhidul9@gmail.com';
+  // final TextEditingController password = TextEditingController()..text = '123456';
+
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+
   final storage = FlutterSecureStorage();
   bool _isPasswordVisible = false;
   bool isLoading = false;
